@@ -4,9 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # General
-*External
-*.dll
-*.lib
+
 *.sln
 *.vcxproj
 *.filters
