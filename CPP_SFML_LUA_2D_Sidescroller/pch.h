@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#include <stack>
 
 //SFML Include
 #include <SFML/System.hpp>

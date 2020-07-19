@@ -8,6 +8,9 @@
 *.sln
 *.vcxproj
 *.filters
+*External
+*.dll
+*.lib
 
 # User-specific files
 *.rsuser

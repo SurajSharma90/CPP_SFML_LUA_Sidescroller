@@ -1,10 +1,12 @@
 #pragma once
+
+#include "State.h"
+
 class Engine
 {
 private:
-	lua_State* L;
+	std::stack<State*> states;
 
-	void initLuaState();
 	void initStates();
 
 public:

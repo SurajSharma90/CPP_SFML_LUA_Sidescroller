@@ -7,9 +7,13 @@ int main()
 	{
 		engine.run();
 	}
+	catch (const char* e)
+	{
+		std::cout << "STRING::" << e << "\n";
+	}
 	catch (std::exception e)
 	{
-		std::cout << "ERROR: " << e.what() << "\n";
+		std::cout << "EXCEPTION::" << e.what() << "\n";
 	}
 
 	return 0;
