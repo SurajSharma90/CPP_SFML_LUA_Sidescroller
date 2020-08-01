@@ -7,18 +7,23 @@ State::State(const char* lua_state_file)
 	this->L = luaL_newstate();
 	luaL_openlibs(this->L);
 
-	int error = luaL_dofile(this->L, lua_state_file);
-	if (error)
-	{
-		std::cout << "LUA::ERROR::STATE::CONSTRUCTOR::" << lua_tostring(this->L, -1) << "\n";
-		lua_pop(this->L, lua_gettop(this->L));
-		throw("CPP::ERROR::STATE::CONSTRUCTOR::Could not open file %s", lua_state_file);
-	}
+	this->lua_state_file = lua_state_file;
 }
 
 State::~State()
 {
 	lua_close(this->L);
+}
+
+void State::loadFile()
+{
+	int error = luaL_dofile(this->L, this->lua_state_file.c_str());
+	if (error)
+	{
+		std::cout << "LUA::ERROR::STATE::CONSTRUCTOR::" << lua_tostring(this->L, -1) << "\n";
+		lua_pop(this->L, lua_gettop(this->L));
+		throw("CPP::ERROR::STATE::CONSTRUCTOR::Could not open file %s", lua_state_file.c_str());
+	}
 }
 
 void State::update()
