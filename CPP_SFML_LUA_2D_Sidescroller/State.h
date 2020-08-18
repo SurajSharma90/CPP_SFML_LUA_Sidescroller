@@ -16,6 +16,7 @@ public:
 	//Functions
 	void loadFile();
 
+	void initialize();
 	void update();
 	void render();
 };
