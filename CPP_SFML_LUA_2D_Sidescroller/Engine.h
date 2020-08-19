@@ -10,6 +10,10 @@ private:
 	std::stack<State*> states;
 	sf::RenderWindow window;
 
+	float deltaTime;
+	sf::Clock dtClock;
+
+	void initVariables();
 	void initStates();
 	void registerCppFunctions(lua_State* L);
 
@@ -32,5 +36,8 @@ public:
 
 	//LUA FUNCTIONS
 	static int cpp_createWindow(lua_State* L);
+	static int cpp_setWindowFramerateLimit(lua_State* L);
+	static int cpp_clearWindow(lua_State* L);
+	static int cpp_displayWindow(lua_State* L);
 };
 

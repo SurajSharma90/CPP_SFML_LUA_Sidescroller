@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "Engine.h"
 
+void Engine::initVariables()
+{
+	this->deltaTime = 0.f;
+	this->dtClock.restart();
+}
+
 void Engine::initStates()
 {
 	this->pushState("Game_State_Lua.lua");
@@ -10,10 +16,20 @@ void Engine::registerCppFunctions(lua_State* L)
 {
 	lua_pushcfunction(L, cpp_createWindow);
 	lua_setglobal(L, "cpp_createWindow");
+
+	lua_pushcfunction(L, cpp_setWindowFramerateLimit);
+	lua_setglobal(L, "cpp_setWindowFramerateLimit");
+
+	lua_pushcfunction(L, cpp_clearWindow);
+	lua_setglobal(L, "cpp_clearWindow");
+
+	lua_pushcfunction(L, cpp_displayWindow);
+	lua_setglobal(L, "cpp_displayWindow");
 }
 
 Engine::Engine()
 {
+	this->initVariables();
 	this->initStates();
 }
 
@@ -97,6 +113,43 @@ int Engine::cpp_createWindow(lua_State* L)
 		engine->window.create(sf::VideoMode(vm_x, vm_y), title, sf::Style::Fullscreen);
 	else
 		engine->window.create(sf::VideoMode(vm_x, vm_y), title, sf::Style::Close | sf::Style::Titlebar);
+
+	return 0;
+}
+
+int Engine::cpp_setWindowFramerateLimit(lua_State* L)
+{
+	lua_getglobal(L, LUA_ENGINE_ACCESSOR);
+	Engine* engine = static_cast<Engine*>(lua_touserdata(L, -1));
+
+	const unsigned framerate_limit = lua_tointeger(L, 1);
+
+	engine->window.setFramerateLimit(framerate_limit);
+
+	return 0;
+}
+
+int Engine::cpp_clearWindow(lua_State* L)
+{
+	lua_getglobal(L, LUA_ENGINE_ACCESSOR);
+	Engine* engine = static_cast<Engine*>(lua_touserdata(L, -1));
+
+	sf::Uint8 r = lua_tointeger(L, 1);
+	sf::Uint8 g = lua_tointeger(L, 2);
+	sf::Uint8 b = lua_tointeger(L, 3);
+	sf::Uint8 a = lua_tointeger(L, 4);
+
+	engine->window.clear(sf::Color(r, g, b, a));
+
+	return 0;
+}
+
+int Engine::cpp_displayWindow(lua_State* L)
+{
+	lua_getglobal(L, LUA_ENGINE_ACCESSOR);
+	Engine* engine = static_cast<Engine*>(lua_touserdata(L, -1));
+
+	engine->window.display();
 
 	return 0;
 }
