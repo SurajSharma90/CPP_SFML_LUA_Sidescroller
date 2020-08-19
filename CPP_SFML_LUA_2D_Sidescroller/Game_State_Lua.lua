@@ -1,14 +1,17 @@
 require("Player")
-print("HELLO FROM LUA!")
+
+print("GAME STATE START")
 
 player = Player:New(2)
 
+function Initialize()
+	cpp_createWindow(1920, 1080, "MY WINDOW", false)
+end
+
 function Update()
-	print("UPDATE!")
-	print(player.base.myNum)
-	cpp_luaTest()
+
 end
 
 function Render()
-	print("RENDER!")
+
 end

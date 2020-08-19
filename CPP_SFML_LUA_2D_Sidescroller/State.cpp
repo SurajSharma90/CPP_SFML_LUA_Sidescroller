@@ -26,6 +26,18 @@ void State::loadFile()
 	}
 }
 
+void State::initialize()
+{
+	lua_getglobal(this->L, "Initialize");
+	int error = lua_pcall(this->L, 0, 0, 0);
+	if (error)
+	{
+		std::cout << "LUA::ERROR::STATE::INITIALIZE::" << lua_tostring(this->L, -1) << "\n";
+		lua_pop(this->L, lua_gettop(this->L));
+		throw("CPP::ERROR::STATE::UPDATE::Cannot call Initialize function.");
+	}
+}
+
 void State::update()
 {
 	lua_getglobal(this->L, "Update");

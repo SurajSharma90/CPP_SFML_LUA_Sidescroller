@@ -7,8 +7,8 @@ constexpr const char* LUA_ENGINE_ACCESSOR = "ENGINE";
 class Engine
 {
 private:
-	int test;
 	std::stack<State*> states;
+	sf::RenderWindow window;
 
 	void initStates();
 	void registerCppFunctions(lua_State* L);
@@ -25,11 +25,12 @@ public:
 	//Functions
 	void pushState(const char* lua_state_file);
 
+	void pollEvent();
 	void update();
 	void render();
 	void run();
 
 	//LUA FUNCTIONS
-	static int luaTest(lua_State* L);
+	static int cpp_createWindow(lua_State* L);
 };
 
